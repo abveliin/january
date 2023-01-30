@@ -41,11 +41,13 @@ export default function Team({ users }: I_users) {
 
       if (user.status === 200) {
         router.push("/manage");
+        console.log("we are in a 200 status code");
         console.log("yeah we get it");
       }
       console.log("log user", user);
     } catch (error) {
       console.log(error);
+      console.log("we are fail to login");
       set_error(true);
     }
   }

@@ -34,7 +34,7 @@ export default async function handler(
     const serialized = serialize("abvelinJWT", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      //sameSite: "strict",
+      sameSite: "strict",
       //maxAge: time_of_duration,
       path: "/",
     });
