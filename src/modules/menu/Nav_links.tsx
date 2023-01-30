@@ -17,6 +17,7 @@ const Nav_links = () => {
       <Nav_link href="/services" title={translation.services} />
       <Nav_link href="/realisations" title="realisations" />
       <Nav_link href="/contact" title={translation.contact} />
+      <Nav_link href="/gallery" title="gallery" />
       <Nav_link href="/manage" title="manage" />
     </ul>
   );

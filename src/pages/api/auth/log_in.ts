@@ -28,7 +28,7 @@ export default async function handler(
       .setProtectedHeader({ alg: "HS256" })
       .setJti(nanoid())
       .setIssuedAt()
-      .setExpirationTime("120")
+      .setExpirationTime("1min")
       .sign(new TextEncoder().encode(get_jwt_secret_key()));
 
     const serialized = serialize("abvelinJWT", token, {
