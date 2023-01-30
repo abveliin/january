@@ -1,0 +1,27 @@
+if (url.includes("/log_in")) {
+  console.log("yeah yeah ");
+  if (abvelinJWT) {
+    try {
+      verify(abvelinJWT, secret);
+
+      return NextResponse.redirect("/");
+    } catch (e) {
+      return NextResponse.next();
+    }
+  }
+}
+
+if (url.includes("/manage")) {
+  if (abvelinJWT === undefined) {
+    return NextResponse.redirect("/log_in");
+  }
+
+  try {
+    verify(abvelinJWT, secret);
+
+    return NextResponse.next();
+  } catch (e) {
+    return NextResponse.redirect("/log_in");
+  }
+}
+return NextResponse.redirect("/log_in");

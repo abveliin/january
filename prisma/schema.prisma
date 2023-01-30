@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  username String
+  password String
+}
+
+model Team_member {
+  id          String   @id @default(uuid())
+  name        String
+  position    String
+  position_fr String
+  photo_url   String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Partener {
+  id         String   @id @default(uuid())
+  name       String
+  logo_url   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Message {
+  id         String   @id @default(uuid())
+  email      String
+  subject    String
+  message    String
+  language   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Realisation {
+  id                   String   @id @default(uuid())
+  tag                  String
+  tag_fr               String
+  title                String
+  title_fr             String
+  excerpt              String
+  excerpt_fr           String
+  lasting_of_execution String
+  photo_url            String
+  created_at           DateTime @default(now())
+  updated_at           DateTime @updatedAt
+}
+
+model New_talent {
+  id         String   @id @default(uuid())
+  name       String
+  email      String
+  phone      String
+  subject    String
+  position   String
+  message    String
+  cv         String
+  language   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
