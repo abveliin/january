@@ -21,14 +21,14 @@ export default async function handler(
 ) {
   const { username, password } = req.body;
 
-  if (username === process.env.USERNAME && password === process.env.PASSWORD) {
+  if (username === "somabu" && password === "ffjj") {
     const time_of_duration = 60 * 60 * 24 * 30;
 
     const token = await new SignJWT({})
       .setProtectedHeader({ alg: "HS256" })
       .setJti(nanoid())
       .setIssuedAt()
-      .setExpirationTime("1m")
+      .setExpirationTime("120")
       .sign(new TextEncoder().encode(get_jwt_secret_key()));
 
     const serialized = serialize("abvelinJWT", token, {
@@ -38,6 +38,7 @@ export default async function handler(
       //maxAge: time_of_duration,
       path: "/",
     });
+    console.log("username and password", username, password);
 
     res.setHeader("Set-Cookie", serialized);
     res.status(200).json({ message: "Success!     uhhhhhu" });
