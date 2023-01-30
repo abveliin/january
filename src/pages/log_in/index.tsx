@@ -116,7 +116,9 @@ export default function Team({ users }: I_users) {
               label_display="Password"
               placeholder="password"
               value={form.password}
-              on_change={(e) => setForm({ ...form, password: e.target.value })}
+              on_change={(e: any) =>
+                setForm({ ...form, password: e.target.value })
+              }
             />
 
             <button

@@ -89,14 +89,15 @@ export default function Team({ parteners }: I_parteners) {
   const submit_fn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formula = e.currentTarget;
+    const files = e.currentTarget.file;
 
     const file_input = Array.from(formula.elements).find(
-      ({ name }) => name === "file"
+      ({ name }: any) => name === "file"
     );
 
     const form_data = new FormData();
 
-    for (const file of file_input.files) {
+    for (const file of files) {
       form_data.append("file", file);
       console.log("file value", file);
     }
@@ -146,7 +147,7 @@ export default function Team({ parteners }: I_parteners) {
               label_display="Nom du parteneur"
               placeholder="Nom du parteneur"
               value={form.name}
-              on_change={(e) => setForm({ ...form, name: e.target.value })}
+              on_change={(e: any) => setForm({ ...form, name: e.target.value })}
             />
             <Input_file name="file" label_display="Photo" />
 

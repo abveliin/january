@@ -17,7 +17,7 @@ export default async function handler(
     console.log("your are already not logged in");
     return res.json({ message: "your are already not logged in" });
   } else {
-    const serialized = serialize("abvelinJWT", null, {
+    const serialized = serialize("abvelinJWT", "itwork_locally", {
       httpOnly: true,
       secure: process.env.NODE_ENV !== "development",
       sameSite: "strict",

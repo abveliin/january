@@ -97,15 +97,11 @@ export default function Team({ team_members, positions }: I_team_members) {
   // DOMPurify.sanitize(data) React.FormEvent<HTMLFormElement> React.FormEventHandler<HTMLFormElement>
   const submit_fn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formula = e.currentTarget;
-
-    const file_input = Array.from(formula.elements).find(
-      ({ name }) => name === "file"
-    );
+    const files = e.currentTarget.file;
 
     const form_data = new FormData();
 
-    for (const file of file_input.files) {
+    for (const file of files) {
       form_data.append("file", file);
       console.log("file value", file);
     }
@@ -170,7 +166,9 @@ export default function Team({ team_members, positions }: I_team_members) {
               label_display="Position"
               placeholder="position"
               value={form.position}
-              on_change={(e) => setForm({ ...form, position: e.target.value })}
+              on_change={(e: any) =>
+                setForm({ ...form, position: e.target.value })
+              }
             />
             <Input_file name="file" label_display="Photo" />
 

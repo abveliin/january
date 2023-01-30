@@ -107,15 +107,11 @@ export default function Realisation_form({ realisations }: I_realisations) {
   // DOMPurify.sanitize(data) React.FormEvent<HTMLFormElement> React.FormEventHandler<HTMLFormElement>
   const submit_fn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formula = e.currentTarget;
-
-    const file_input = Array.from(formula.elements).find(
-      ({ name }) => name === "file"
-    );
+    const files = e.currentTarget.file;
 
     const form_data = new FormData();
 
-    for (const file of file_input.files) {
+    for (const file of files) {
       form_data.append("file", file);
       console.log("file value", file);
     }
@@ -162,14 +158,16 @@ export default function Realisation_form({ realisations }: I_realisations) {
               label_display="catégorie"
               placeholder="veuillez entrer la catégorie"
               value={form.tag_fr}
-              on_change={(e) => setForm({ ...form, tag_fr: e.target.value })}
+              on_change={(e: any) =>
+                setForm({ ...form, tag_fr: e.target.value })
+              }
             />
             <Input_text
               label="tag"
               label_display="tag"
               placeholder="enter the category please"
               value={form.tag}
-              on_change={(e) => setForm({ ...form, tag: e.target.value })}
+              on_change={(e: any) => setForm({ ...form, tag: e.target.value })}
             />
 
             <Input_text
@@ -177,21 +175,25 @@ export default function Realisation_form({ realisations }: I_realisations) {
               label_display="le titre du projet"
               placeholder="veuiller entre le titre du projet"
               value={form.title_fr}
-              on_change={(e) => setForm({ ...form, title_fr: e.target.value })}
+              on_change={(e: any) =>
+                setForm({ ...form, title_fr: e.target.value })
+              }
             />
             <Input_text
               label="title"
               label_display="title"
               placeholder="The project title please"
               value={form.title}
-              on_change={(e) => setForm({ ...form, title: e.target.value })}
+              on_change={(e: any) =>
+                setForm({ ...form, title: e.target.value })
+              }
             />
             <Input_text
               label="excerpt_fr"
               label_display="description du projet"
               placeholder="veuillez entrer la description du projet"
               value={form.excerpt_fr}
-              on_change={(e) =>
+              on_change={(e: any) =>
                 setForm({ ...form, excerpt_fr: e.target.value })
               }
             />
@@ -200,14 +202,16 @@ export default function Realisation_form({ realisations }: I_realisations) {
               label_display="excerpt"
               placeholder="Enter your excerpt please"
               value={form.excerpt}
-              on_change={(e) => setForm({ ...form, excerpt: e.target.value })}
+              on_change={(e: any) =>
+                setForm({ ...form, excerpt: e.target.value })
+              }
             />
             <Input_text
               label="lasting_of_execution"
               label_display="lasting_of_execution"
               placeholder="Your lasting_of_execution please"
               value={form.lasting_of_execution}
-              on_change={(e) =>
+              on_change={(e: any) =>
                 setForm({ ...form, lasting_of_execution: e.target.value })
               }
             />
