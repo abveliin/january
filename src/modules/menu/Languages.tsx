@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 const Languages = () => {
   const router = useRouter();
-  const change_language_fn = (e) => {
+  const change_language_fn = (e: any) => {
     const locale = e.target.value;
     router.push("/", "/", { locale });
   };
