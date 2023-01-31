@@ -127,7 +127,7 @@ export default function Team({ users }: I_users) {
               type="submit"
               className="bg-blue-500 text-white rounded p-1"
             >
-              Login
+              Login jwt
             </button>
             <button
               onClick={log_out}
