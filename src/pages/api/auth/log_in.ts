@@ -26,24 +26,7 @@ export default async function handler(
   if (username === "somabu" && password === "ffjj") {
     const serialized = serialize("abvelinJWT", "7zm0", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: time_of_duration,
-      path: "/",
-    });
-    console.log("username and password", username, password);
-
-    res.setHeader("Set-Cookie", serialized);
-    res.status(200).json({ message: "Success!     uhhhhhu" });
-  } else {
-    console.log("invalid credentials");
-    res.status(401).json({ message: "Invalid credentials!" });
-  }
-
-  if (username === "somabu" && password === "f j ") {
-    const serialized = serialize("abvellin_jwt", "7zmasfaff0", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      //secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: time_of_duration,
       path: "/",

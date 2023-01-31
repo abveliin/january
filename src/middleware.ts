@@ -8,6 +8,7 @@ const secret = process.env.ABVELIN_KEY;
 export default async function middleware(request: NextRequest) {
   const { cookies } = request;
   const abvelinJWT = cookies.get("abvelinJWT")?.value;
+  console.log(" asjflkajsfkajfs ");
 
   if (request.nextUrl.pathname.startsWith("/log_in") && !abvelinJWT) {
     return;
