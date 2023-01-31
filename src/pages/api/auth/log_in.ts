@@ -21,21 +21,31 @@ export default async function handler(
 ) {
   const { username, password } = req.body;
 
+  const time_of_duration = 60 * 60;
+
   if (username === "somabu" && password === "ffjj") {
-    const time_of_duration = 60 * 60 * 24 * 30;
-
-    const token = await new SignJWT({})
-      .setProtectedHeader({ alg: "HS256" })
-      .setJti(nanoid())
-      .setIssuedAt()
-      .setExpirationTime("1min")
-      .sign(new TextEncoder().encode(get_jwt_secret_key()));
-
-    const serialized = serialize("abvelinJWT", token, {
+    const serialized = serialize("abvelinJWT", "7zm0", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      //maxAge: time_of_duration,
+      maxAge: time_of_duration,
+      path: "/",
+    });
+    console.log("username and password", username, password);
+
+    res.setHeader("Set-Cookie", serialized);
+    res.status(200).json({ message: "Success!     uhhhhhu" });
+  } else {
+    console.log("invalid credentials");
+    res.status(401).json({ message: "Invalid credentials!" });
+  }
+
+  if (username === "somabu" && password === "f j ") {
+    const serialized = serialize("abvellin_jwt", "7zmasfaff0", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: time_of_duration,
       path: "/",
     });
     console.log("username and password", username, password);

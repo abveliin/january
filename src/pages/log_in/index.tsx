@@ -36,11 +36,11 @@ export default function Team({ users }: I_users) {
 
   async function create(data: FormData) {
     try {
-      const user = await axios.post(`${url}/api/auth/log_in`, data);
+      const user = await axios.post(`/api/auth/log_in`, data);
       setForm(empty_form);
 
       if (user.status === 200) {
-        router.push(`${url}/manage`);
+        router.push(`/manage`);
         console.log("we are in a 200 status code");
         console.log("yeah we get it");
       }
