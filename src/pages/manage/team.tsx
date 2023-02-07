@@ -6,12 +6,18 @@ import { prisma } from "../../../lib/prisma";
 import en from "../../locales/en";
 import fr from "../../locales/fr";
 
-import Input_file from "@/modules/Input_file";
-import Input_text from "@/modules/Input_text";
+import { insert_photo, photo } from "../../lib/insert_photo";
+
+import Input_file from "@/modules/form/Input_file";
+import Input_text from "@/modules/form/Input_text";
+//import insert_photo from "./insert_photo";
+import Sidebar from "./components/Sidebar";
+import { empty } from "@prisma/client/runtime";
 
 interface FormData {
   name: string;
   position: string;
+  position_fr: string;
   photo_url: string;
   id: string;
 }
@@ -37,12 +43,15 @@ export default function Team({ team_members, positions }: I_team_members) {
     router.replace(router.asPath);
   };
 
-  const [form, setForm] = useState<FormData>({
+  const empty_form = {
     name: "",
     position: "",
+    position_fr: "",
     photo_url: "",
     id: "",
-  });
+  };
+
+  const [form, setForm] = useState<FormData>(empty_form);
   // I use these two variable of codes in order to update the list after pushing on a server and I'mna call it after submitting the form in then method
 
   async function create(data: FormData) {
@@ -56,12 +65,7 @@ export default function Team({ team_members, positions }: I_team_members) {
           method: "PUT",
         })
           .then(() => {
-            setForm({
-              id: "",
-              name: "",
-              position: "",
-              photo_url: "",
-            });
+            setForm(empty_form);
             refresh_data();
             console.log("then we update");
           })
@@ -71,7 +75,7 @@ export default function Team({ team_members, positions }: I_team_members) {
       }
     } else {
       try {
-        await fetch(`http://localhost:3000/api/team/create`, {
+        await fetch(`/api/team/create`, {
           body: JSON.stringify(data),
           headers: {
             "Content-Type": "application/json",
@@ -79,12 +83,7 @@ export default function Team({ team_members, positions }: I_team_members) {
           method: "POST",
         })
           .then(() => {
-            setForm({
-              id: "",
-              name: "",
-              position: "",
-              photo_url: "",
-            });
+            setForm(empty_form);
             console.log("then we create");
           })
           .catch((e) => console.log(e));
@@ -95,31 +94,12 @@ export default function Team({ team_members, positions }: I_team_members) {
   }
 
   // DOMPurify.sanitize(data) React.FormEvent<HTMLFormElement> React.FormEventHandler<HTMLFormElement>
-  const submit_fn = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const files = e.currentTarget.file;
+  const submit_fn = async (event) => {
+    await insert_photo(event, "team_member");
 
-    const form_data = new FormData();
+    form.photo_url = photo.secure_url;
 
-    for (const file of files) {
-      form_data.append("file", file);
-      console.log("file value", file);
-    }
-    form_data.append("upload_preset", "team_member");
-
-    const data = await fetch(
-      "https://api.cloudinary.com/v1_1/somabu/image/upload",
-      {
-        method: "POST", //or put, delete,
-        body: form_data,
-      }
-    )
-      .then((res) => res.json())
-      .catch((e) => console.log(e));
-
-    console.log("data from cloudinary", data);
-    form.photo_url = data.secure_url;
-    console.log("data form", form);
+    console.log("form.photo_url", form.photo_url);
 
     try {
       // DOMPurify.sanitize(data)
@@ -130,21 +110,22 @@ export default function Team({ team_members, positions }: I_team_members) {
   };
 
   return (
-    <div className="relative bg-red-400">
+    <div className="relative">
       <Head>
         <title>SOMABU</title>
         <meta name="description" content="test of a multilanguage website" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <div className="relative bg-white mt-20">
-        <p className="py-8 px-8">{translation.description}</p>
+      <div className="flex min-h-screen py-8  mt-[60px]">
+        <div className="w-2/6 p-6 bg-blue-100">
+          <Sidebar />
+        </div>
 
-        <div className="w-1/2 mx-auto">
+        <div className="mx-auto w-1/2 mt-20">
           <form
             method="post"
             onSubmit={submit_fn}
-            // onSubmit={}
-            className="w-auto min-w-[75%] mx-0 sm:mx-auto md:mx-8 px-4 md:px-6 py-6 flex flex-col items-stretch shadow-2xl"
+            className="w-auto min-w-[75%] mx-0 sm:mx-auto md:mx-8 px-4 md:px-6 py-6 flex flex-col items-stretch"
           >
             <div className="mb-4">
               <label
@@ -168,6 +149,15 @@ export default function Team({ team_members, positions }: I_team_members) {
               value={form.position}
               on_change={(e: any) =>
                 setForm({ ...form, position: e.target.value })
+              }
+            />
+            <Input_text
+              label="post"
+              label_display="Post"
+              placeholder="post"
+              value={form.position_fr}
+              on_change={(e: any) =>
+                setForm({ ...form, position_fr: e.target.value })
               }
             />
             <Input_file name="file" label_display="Photo" />

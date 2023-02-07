@@ -11,10 +11,12 @@ model User {
   id       String @id @default(uuid())
   username String
   password String
+  role     String
 }
 
 model Team_member {
   id          String   @id @default(uuid())
+  order       Int      @default(0)
   name        String
   position    String
   position_fr String
@@ -25,6 +27,7 @@ model Team_member {
 
 model Partener {
   id         String   @id @default(uuid())
+  order      Int      @default(0)
   name       String
   logo_url   String
   created_at DateTime @default(now())
@@ -43,6 +46,7 @@ model Message {
 
 model Realisation {
   id                   String   @id @default(uuid())
+  order                Int      @default(0)
   tag                  String
   tag_fr               String
   title                String
@@ -55,7 +59,7 @@ model Realisation {
   updated_at           DateTime @updatedAt
 }
 
-model New_talent {
+model Submition {
   id         String   @id @default(uuid())
   name       String
   email      String
@@ -63,7 +67,7 @@ model New_talent {
   subject    String
   position   String
   message    String
-  cv         String
+  cv_url     String
   language   String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

@@ -1,4 +1,4 @@
-export default {
+const translations = {
   home: "acceuil",
   about: "à propos de nous",
   services: "services",
@@ -22,3 +22,5 @@ export default {
   description_point_6: "Fournitures bio-médicales",
   historical: "HISTORIQUE",
 };
+
+export default translations;

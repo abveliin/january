@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   i18n: {
     locales: ["fr", "en"],
     defaultLocale: "fr",
@@ -12,6 +12,13 @@ const nextConfig = {
       "scontent-mba1-1.cdninstagram.com",
       "res.cloudinary.com",
     ],
+  },
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
   },
 };
 

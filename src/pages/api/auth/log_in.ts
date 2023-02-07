@@ -26,7 +26,7 @@ export default async function handler(
   if (username === "somabu" && password === "ffjj") {
     const serialized = serialize("abvelinJWT", "7zm0", {
       httpOnly: true,
-      //secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: time_of_duration,
       path: "/",

@@ -7,7 +7,7 @@ import { prisma } from "../../../lib/prisma";
 import en from "../../locales/en";
 import fr from "../../locales/fr";
 
-import Input_text from "@/modules/Input_text";
+import Input_text from "@/modules/form/Input_text";
 
 interface FormData {
   username: string;

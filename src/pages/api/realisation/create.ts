@@ -22,7 +22,7 @@ export default async function handler(
     lasting_of_execution,
     photo_url,
   } = req.body;
-
+  //const order: number = 0;
   try {
     await prisma.realisation.create({
       data: {
@@ -34,6 +34,7 @@ export default async function handler(
         excerpt,
         lasting_of_execution,
         photo_url,
+        // order: order,
       },
     });
     res.status(200).json({ message: "data" }); // this line is required in order to refresh the database successfully
