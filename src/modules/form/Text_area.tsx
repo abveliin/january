@@ -1,15 +1,16 @@
 import React from "react";
 
-interface I_input_text {
+interface I_text_area {
+  //id: string;
   name: string;
   label: string;
   placeholder: string;
   value: string;
-  on_change: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  on_change: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   error: boolean;
   error_message: string | undefined;
 }
-function Input_text({
+function Text_area({
   name,
   label,
   placeholder,
@@ -18,17 +19,18 @@ function Input_text({
   error,
   error_message = "",
   ...props
-}: I_input_text) {
+}: I_text_area) {
   return (
     <div className="mb-2">
       <label className="block font-bold text-gray-900" htmlFor={name}>
         {label}
       </label>
-      <input
+      <textarea
         autoComplete="off"
-        type="text"
         id={name}
         name={name}
+        rows={3}
+        style={{ resize: "none" }}
         placeholder={placeholder}
         value={value}
         onChange={on_change}
@@ -39,11 +41,8 @@ function Input_text({
       {error ? (
         <span className="text-sm italic text-red-500">*{error_message}</span>
       ) : null}
-      {/* <span className="px-2 text-red-700 bg-red-100 invalid:block">
-        {error_message}
-      </span> */}
     </div>
   );
 }
 
-export { Input_text };
+export { Text_area };

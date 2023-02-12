@@ -16,7 +16,7 @@ function Input_number({
 }: I_input_number) {
   return (
     <div className="mb-4">
-      <label className="block text-bl text-sm font-bold mb-1" htmlFor={label}>
+      <label className="block mb-1 text-sm font-bold text-bl" htmlFor={label}>
         {label_display}
       </label>
       <input
@@ -24,10 +24,10 @@ function Input_number({
         placeholder={placeholder}
         value={value}
         onChange={on_change}
-        className="border-2 rounded border-gray-400 p-2 w-full mx-auto"
+        className="w-full p-2 mx-auto border-2 border-gray-400 rounded"
       />
     </div>
   );
 }
 
-export default Input_number;
+export { Input_number };

@@ -10,15 +10,15 @@ const Languages = () => {
   return (
     <>
       <button
-        className="pr-1 text-base"
+        className="p-0 text-xl scale-150 bg-rjed-300"
         value="fr"
         onClick={change_language_fn}
       >
         🇫🇷
       </button>
-
+      <span className="px-2 text-lg">|</span>
       <button
-        className="pl-1 text-base border-l-2  border-gray-900"
+        className="pl-1 text-base transition duration-500 ease-in-out scale-100 bg-rsed-300 hover:scale-150"
         value="en"
         onClick={change_language_fn}
       >

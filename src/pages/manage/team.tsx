@@ -6,13 +6,14 @@ import { prisma } from "../../../lib/prisma";
 import en from "../../locales/en";
 import fr from "../../locales/fr";
 
-import { insert_photo, photo } from "../../lib/insert_photo";
+import { insert_photo, file_uploaded } from "../../lib/insert_photo";
+import { Create_fn } from "../../lib/Create_fn";
 
 import Input_file from "@/modules/form/Input_file";
 import Input_text from "@/modules/form/Input_text";
 //import insert_photo from "./insert_photo";
 import Sidebar from "./components/Sidebar";
-import { empty } from "@prisma/client/runtime";
+import { Cud } from "@/lib/cud";
 
 interface FormData {
   name: string;
@@ -54,56 +55,20 @@ export default function Team({ team_members, positions }: I_team_members) {
   const [form, setForm] = useState<FormData>(empty_form);
   // I use these two variable of codes in order to update the list after pushing on a server and I'mna call it after submitting the form in then method
 
-  async function create(data: FormData) {
-    if (data.id) {
-      try {
-        fetch(`http://localhost:3000/api/team/${data.id}`, {
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "PUT",
-        })
-          .then(() => {
-            setForm(empty_form);
-            refresh_data();
-            console.log("then we update");
-          })
-          .catch((e) => console.log(e));
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      try {
-        await fetch(`/api/team/create`, {
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-        })
-          .then(() => {
-            setForm(empty_form);
-            console.log("then we create");
-          })
-          .catch((e) => console.log(e));
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }
+  let api_redirection: string = "team";
+
+  //Cud(data, api_redirection);
 
   // DOMPurify.sanitize(data) React.FormEvent<HTMLFormElement> React.FormEventHandler<HTMLFormElement>
   const submit_fn = async (event) => {
     await insert_photo(event, "team_member");
 
-    form.photo_url = photo.secure_url;
-
-    console.log("form.photo_url", form.photo_url);
+    form.photo_url = file_uploaded.secure_url;
 
     try {
       // DOMPurify.sanitize(data)
-      create(form);
+      Create_fn(form, api_redirection, setForm, empty_form, refresh_data);
+      //Cud(form, api_redirection);
     } catch (error) {
       console.log(error);
     }

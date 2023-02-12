@@ -11,36 +11,25 @@ import {
 
 import { BsArrowDownUp } from "react-icons/bs";
 
-import { Inter } from "@next/font/google";
-import { prisma } from "../../../../lib/prisma";
-
-import Sidebar from "../components/Sidebar";
+import { prisma } from "../../lib/prisma";
 
 import { useRouter } from "next/router";
-import en from "../../../locales/en";
-import fr from "../../../locales/fr";
+import en from "../locales/en";
+import fr from "../locales/fr";
 
 import Title_section from "@/modules/sections/Title_section";
 
-const inter = Inter({ subsets: ["latin"] });
-
-interface I_realisations {
-  realisations: {
-    id: string;
-    title: string;
-    title_fr: string;
-    photo_url: string;
-  }[];
-}
-
-export default function Realisations_list_order({
-  realisations,
-}: I_realisations) {
+export default function Change_list_order(
+  elements_to_change_order,
+  api_redirection,
+  children
+) {
   const router = useRouter();
   const { locale } = router;
   const translation = locale === "fr" ? fr : en;
 
-  const [characters, update_characters] = useState(realisations);
+  const [characters, update_characters] = useState(elements_to_change_order);
+  let character;
 
   const on_drag_end_fn = async (result) => {
     if (!result.destination) return;
@@ -59,7 +48,7 @@ export default function Realisations_list_order({
 
     try {
       console.log("characters in submit form", characters);
-      await fetch(`/api/realisation/update_order`, {
+      await fetch(`/api/${api_redirection}/update_order`, {
         body: JSON.stringify(characters),
         headers: {
           "Content-Type": "application/json",
@@ -77,16 +66,7 @@ export default function Realisations_list_order({
 
   return (
     <div className="relative mt-32 bg-slate-100">
-      <Head>
-        <title>SOMABU</title>
-        <meta name="description" content="test of a multilanguage website" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-
       <div className="flex min-h-screen py-8  mt-[60px]">
-        <div className="w-2/6 p-6 bg-blue-100">
-          <Sidebar />
-        </div>
         <div className="w-1/2  mx-auto bg-gray-50">
           <Title_section title="Order realisations" />
 
@@ -120,15 +100,7 @@ export default function Realisations_list_order({
                                   className="object-cover object-center h-full w-full"
                                 />
                               </div>
-                              <div className="ml-4">
-                                {locale === "fr" &&
-                                  character.title_fr.length > 5 &&
-                                  character.title_fr}
-
-                                {locale === "en" &&
-                                  character.title.length > 5 &&
-                                  character.title}
-                              </div>
+                              {children}
                             </div>
                           </li>
                         )}
@@ -154,26 +126,3 @@ export default function Realisations_list_order({
     </div>
   );
 }
-
-export const getServerSideProps = async () => {
-  const realisations = await prisma.realisation.findMany({
-    // created_at and updated_at can be dificult to retreive that's why I add these parameters in findMany function
-    select: {
-      id: true,
-      title: true,
-      title_fr: true,
-      photo_url: true,
-    },
-    orderBy: { order: "asc" },
-  });
-
-  console.log("realisations", realisations);
-
-  resetServerContext();
-
-  return {
-    props: {
-      realisations,
-    },
-  };
-};

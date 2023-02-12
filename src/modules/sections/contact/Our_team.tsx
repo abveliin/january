@@ -1,14 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
 import Image from "next/image";
+
+import { Apply_modal } from "../../components/Apply_modal";
 import Title_section from "../Title_section";
 
 import { insert_photo } from "@/lib/insert_photo";
 
 import en from "../../../locales/en";
 import fr from "../../../locales/fr";
-import { Modal_to_apply } from "./Modal_to_apply";
+//import { Modal_to_apply } from "./Modal_to_apply";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
 interface I_team_members {
@@ -33,10 +34,6 @@ function Our_team({ team_members, language }: I_team_members) {
     router.replace(router.asPath);
   };
 
-  const modal_toggle_fn = () => {
-    set_is_modal_open(!is_modal_open);
-  };
-
   const slide_left = () => {
     let slider = document.getElementById("slider");
     slider.scrollLeft = slider.scrollLeft - 500;
@@ -59,7 +56,7 @@ function Our_team({ team_members, language }: I_team_members) {
         />
         <div
           id="slider"
-          className="flex  w-full h-full overflow-x-scroll scroll scroll-smooth scrollbar-hide"
+          className="flex w-full h-full overflow-x-scroll scroll scroll-smooth scrollbar-hide"
         >
           {team_members.map((team_member) => (
             <div
@@ -97,18 +94,6 @@ function Our_team({ team_members, language }: I_team_members) {
           size={40}
         />
       </div>
-      {/* <div className="flex justify-center items-center py-4 text-base text-red-600 bg-red-200">
-        <span>We hire in the field of our expertise</span>
-        <button
-          className="text-slate-50 ml-4 px-4 py-3  rounded-lg bg-blue-500 hover:scale-110 transition duration-150 ease-out hover:ease-in"
-          onClick={modal_toggle_fn}
-        >
-          Apply
-        </button>
-      </div> */}
-      {is_modal_open && (
-        <Modal_to_apply on_close={() => set_is_modal_open(false)} />
-      )}
     </div>
   );
 }

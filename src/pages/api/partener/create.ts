@@ -14,6 +14,8 @@ export default async function handler(
 ) {
   const { name, logo_url } = req.body;
 
+  //validation
+
   try {
     const partener = await prisma.partener.create({
       data: {

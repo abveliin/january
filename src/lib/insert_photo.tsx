@@ -1,8 +1,9 @@
 import axios from "axios";
-let photo: any;
+let file_uploaded: any;
+
 export async function insert_photo(event, upload_preset) {
   console.log("in a submit form");
-  event.preventDefault();
+
   const formula = event.currentTarget;
   const file_input = Array.from(formula.elements).find(
     ({ name }: any) => name === "file"
@@ -20,9 +21,9 @@ export async function insert_photo(event, upload_preset) {
   );
 
   if (new_photo.status === 200) {
-    photo = new_photo.data;
+    file_uploaded = new_photo.data;
   }
 
-  return photo;
+  return file_uploaded;
 }
-export { photo };
+export { file_uploaded };

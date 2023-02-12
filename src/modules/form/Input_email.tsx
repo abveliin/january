@@ -1,24 +1,21 @@
 import React from "react";
 
-interface I_input_text {
+interface I_input_email {
   name: string;
   label: string;
   placeholder: string;
   value: string;
   on_change: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error: boolean;
-  error_message: string | undefined;
+  //error_message: string;
 }
-function Input_text({
+function Input_email({
   name,
   label,
   placeholder,
   value,
   on_change,
-  error,
-  error_message = "",
   ...props
-}: I_input_text) {
+}: I_input_email) {
   return (
     <div className="mb-2">
       <label className="block font-bold text-gray-900" htmlFor={name}>
@@ -36,9 +33,6 @@ function Input_text({
         //pattern="[A-Za-z]"
         //required
       />
-      {error ? (
-        <span className="text-sm italic text-red-500">*{error_message}</span>
-      ) : null}
       {/* <span className="px-2 text-red-700 bg-red-100 invalid:block">
         {error_message}
       </span> */}
@@ -46,4 +40,4 @@ function Input_text({
   );
 }
 
-export { Input_text };
+export { Input_email };

@@ -8,7 +8,7 @@ function Input_file({ name, label_display }: I_input_file) {
   return (
     <div className="mb-4">
       <label
-        className="block text-gray-700 text-sm font-bold mb-1"
+        className="block mb-1 text-sm font-bold text-gray-700"
         htmlFor={name}
       >
         {label_display}
@@ -18,4 +18,4 @@ function Input_file({ name, label_display }: I_input_file) {
   );
 }
 
-export default Input_file;
+export { Input_file };

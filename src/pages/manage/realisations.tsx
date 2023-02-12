@@ -11,7 +11,8 @@ import fr from "../../locales/fr";
 import Sidebar from "./components/Sidebar";
 import Input_text from "@/modules/form/Input_text";
 import Input_file from "@/modules/form/Input_file";
-import { insert_photo, photo } from "../../lib/insert_photo";
+import { file_uploaded, insert_photo } from "../../lib/insert_photo";
+import { Create_fn } from "@/lib/Create_fn";
 
 interface FormData {
   id: string;
@@ -49,47 +50,10 @@ export default function Realisation_form({ realisations }: I_realisations) {
     lasting_of_execution: "",
   };
 
+  const api_redirection: string = "realisation";
+
   const [form, setForm] = useState<FormData>(emtpy_form);
   // I use these two variable of codes in order to update the list after pushing on a server and I'mna call it after submitting the form in then method
-
-  async function create(data: FormData) {
-    if (data.id) {
-      try {
-        fetch(`http://localhost:3000/api/realisation/${data.id}`, {
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "PUT",
-        })
-          .then(() => {
-            setForm(emtpy_form);
-            refresh_data();
-            console.log("then we update");
-          })
-          .catch((e) => console.log(e));
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      try {
-        await fetch(`/api/realisation/create`, {
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-        })
-          .then(() => {
-            setForm(emtpy_form);
-            console.log("then we create");
-          })
-          .catch((e) => console.log(e));
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }
 
   const delete_fn = async (id: string) => {
     try {
@@ -112,13 +76,13 @@ export default function Realisation_form({ realisations }: I_realisations) {
   const submit_fn = async (event) => {
     await insert_photo(event, "team_member");
 
-    form.photo_url = photo.secure_url;
+    form.photo_url = file_uploaded.secure_url;
 
     console.log("form.photo_url", form.photo_url);
 
     try {
       // DOMPurify.sanitize(data)
-      create(form);
+      Create_fn(form, api_redirection, setForm, emtpy_form, refresh_data);
     } catch (error) {
       console.log(error);
     }

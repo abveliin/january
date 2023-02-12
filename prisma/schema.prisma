@@ -59,7 +59,7 @@ model Realisation {
   updated_at           DateTime @updatedAt
 }
 
-model Submition {
+model Apply_for_job {
   id         String   @id @default(uuid())
   name       String
   email      String
