@@ -4,8 +4,8 @@ import Image from "next/image";
 
 import { useRouter } from "next/router";
 import { prisma } from "../../../lib/prisma";
-import en from "@/locales/en";
-import fr from "@/locales/fr";
+import { en } from "@/locales/en";
+import { fr } from "@/locales/fr";
 import Nav_link from "@/modules/sections/menu/link/Nav_link";
 import Link_with_icon from "@/modules/components/Link_with_icon";
 import Sidebar from "./components/Sidebar";

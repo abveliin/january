@@ -47,12 +47,12 @@ model Message {
 model Realisation {
   id                   String   @id @default(uuid())
   order                Int      @default(0)
-  tag                  String
-  tag_fr               String
+  category             String
+  category_fr          String
   title                String
   title_fr             String
-  excerpt              String
-  excerpt_fr           String
+  description          String
+  description_fr       String
   lasting_of_execution String
   photo_url            String
   created_at           DateTime @default(now())
@@ -64,9 +64,8 @@ model Apply_for_job {
   name       String
   email      String
   phone      String
-  subject    String
   position   String
-  message    String
+  motivation String
   cv_url     String
   language   String
   created_at DateTime @default(now())

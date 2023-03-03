@@ -1,8 +1,8 @@
 import { Parallax, Background } from "react-parallax";
 
 import { useRouter } from "next/router";
-import en from "../../../locales/en";
-import fr from "../../../locales/fr";
+import { en } from "../../../locales/en";
+import { fr } from "../../../locales/fr";
 
 interface I_summary_parallax {
   translation: object;
@@ -14,8 +14,8 @@ const Summary_parallax = () => {
   return (
     <Parallax
       strength={400}
-      //className="relative flex justify-center items-center w-full aspect-video mt-8 bg-red-900" // h-screen bg-fixed bg-center bg-cover
-      className="relative px-8 md:w-1/2 -mt-16 py-16 text-base text-white leading-none bg-blue-900"
+      //className="relative flex items-center justify-center w-full mt-8 bg-red-900 aspect-video" // h-screen bg-fixed bg-center bg-cover
+      className="relative px-8 py-16 -mt-16 text-base leading-none text-white bg-blue-900 md:w-1/2"
     >
       <Background className="w-screen aspect-video bg_image_summary" />
       {

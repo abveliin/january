@@ -1,4 +1,4 @@
-const translations = {
+const fr = {
   home: "acceuil",
   about: "à propos de nous",
   services: "services",
@@ -21,6 +21,22 @@ const translations = {
   description_point_5: "Fournitures diverses",
   description_point_6: "Fournitures bio-médicales",
   historical: "HISTORIQUE",
+
+  message_after_send: "votre requete a ete envoye avec sucess",
+  error_field_message: "Champ obligatoire",
+  entrer_image: "Entrer une image",
+
+  label_name: "Nom",
+  label_name_placeholder: "Votre nom",
+
+  label_email: "Email",
+  label_email_placeholder: "Votre email",
+
+  label_subject: "Subject",
+  label_subject_placeholder: "Sujet",
+
+  label_message: "Message",
+  label_message_placeholder: "Votre message",
 };
 
-export default translations;
+export { fr };

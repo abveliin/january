@@ -7,17 +7,14 @@ import Navbar from "../modules/sections/menu/navbar/Navbar";
 import { useState } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-
   const [is_scrollable, set_is_scrollable] = useState(true);
   //return <Component {...pageProps} />
   return (
     <div className="">
-      {is_scrollable}
-      <div className={`${is_scrollable ? `relative` : `fixed`} `}>
-        <Navbar />
-        <Component {...pageProps} />
-      </div>
+      {/* <div className={`${is_scrollable ? `relative` : `fixed`} `}> */}
+      <Navbar />
+      <Component {...pageProps} />
+      {/* </div> */}
     </div>
   );
 }

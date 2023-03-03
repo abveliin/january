@@ -13,7 +13,7 @@ interface I_form_data {
   message: string;
 }
 
-function Contact_form() {
+function Contact_form({ translation }) {
   const empty_form = {
     id: "",
     name: "",
@@ -30,33 +30,36 @@ function Contact_form() {
   }>({});
 
   const on_submit_fn = async (event: React.FormEvent<HTMLFormElement>) => {
+    console.log("translations", translation);
     event.preventDefault();
     console.log(form);
-    const errors = validate(form);
+    const errors = validate(form, translation);
     const is_error = Object.keys(errors).length;
 
-    if (is_error && is_error > 0) {
-      set_errors(errors);
-      // console.log(errors);
-      return;
-    }
-    console.log(form);
-    // try {
-    //   await fetch(`/api/sendgrid`, {
-    //     body: JSON.stringify(form),
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     method: "POST",
-    //   })
-    //     .then(() => {
-    //       setForm(empty_form);
-    //       console.log("then we create");
-    //     })
-    //     .catch((e) => console.log(e));
-    // } catch (error) {
-    //   console.log(error);
+    // if (is_error && is_error > 0) {
+    //   set_errors(errors);
+
+    //   console.log("errors are here", errors);
+    //   console.log("is_error verification", is_error);
+    //   return;
     // }
+    console.log(form);
+    try {
+      await fetch(`/api/send_message_with_sendgrid`, {
+        body: JSON.stringify(form),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      })
+        .then(() => {
+          setForm(empty_form);
+          console.log("then we send message with sendgrid");
+        })
+        .catch((e) => console.log(e));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const on_change = (
@@ -75,8 +78,8 @@ function Contact_form() {
       >
         <Input_text
           name="name"
-          label="Votre nom"
-          placeholder="entrer votre nom"
+          label={translation.label_name}
+          placeholder={translation.label_name}
           value={form.name}
           on_change={on_change}
           error={!!errors.name}
@@ -84,8 +87,8 @@ function Contact_form() {
         />
         <Input_text
           name="email"
-          label="Email"
-          placeholder="entrer votre email ici"
+          label={translation.label_email}
+          placeholder={translation.label_email}
           value={form.email}
           on_change={on_change}
           error={!!errors.email}
@@ -94,8 +97,8 @@ function Contact_form() {
 
         <Input_text
           name="subject"
-          label="Sujet"
-          placeholder="entrer le sujet de votre message"
+          label={translation.label_subject}
+          placeholder={translation.label_subject_placeholder}
           value={form.subject}
           on_change={on_change}
           error={!!errors.subject}
@@ -104,8 +107,8 @@ function Contact_form() {
 
         <Text_area
           name="message"
-          label="Message"
-          placeholder="Veuillez entrer message svp"
+          label={translation.label_message}
+          placeholder={translation.label_message_placeholder}
           value={form.message}
           on_change={on_change}
           error={!!errors.message}

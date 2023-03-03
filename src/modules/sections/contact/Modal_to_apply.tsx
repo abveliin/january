@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { GrDocumentPdf } from "react-icons/gr";
 
-import { insert_photo, photo } from "@/lib/insert_photo";
+import { insert_photo, photo } from "@/lib/insert_file";
 import { MdOutlineClose } from "react-icons/md";
 
 import Input_file from "@/modules/form/Input_file";

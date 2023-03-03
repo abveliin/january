@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Apply_modal } from "../../components/Apply_modal";
 import Title_section from "../Title_section";
 
-import { insert_photo } from "@/lib/insert_photo";
+import { insert_photo } from "@/lib/insert_file";
 
 import en from "../../../locales/en";
 import fr from "../../../locales/fr";

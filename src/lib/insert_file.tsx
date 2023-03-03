@@ -1,7 +1,7 @@
 import axios from "axios";
 let file_uploaded: any;
 
-export async function insert_photo(event, upload_preset) {
+export async function insert_file(event, upload_preset) {
   console.log("in a submit form");
 
   const formula = event.currentTarget;

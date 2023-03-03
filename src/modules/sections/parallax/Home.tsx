@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Parallax, Background } from "react-parallax";
+import Nav_scroll from "../menu/link/Nav_scroll";
 import niveleuse from "/public/pictures/niveleuse.jpeg";
 //import { CldImage } from "next-cloudinary"; //next-cloudinary
 
@@ -15,7 +16,7 @@ const Home_parallax = ({ heading, message }: I_para) => {
     <Parallax
       strength={400}
       //className="relative flex items-center justify-center w-full mt-8 bg-red-900 aspect-video" // h-screen bg-fixed bg-center bg-cover
-      className="flex items-center justify-center w-screen h-screen mt-8 bg-red-900 md:w-screen md:aspect-video"
+      className="flex items-center justify-center w-screen h-screen mt-8 md:w-screen md:aspect-video"
     >
       <Background className="w-screen h-screen md:w-screen md:aspect-video">
         <Image
@@ -37,9 +38,9 @@ const Home_parallax = ({ heading, message }: I_para) => {
             <p className="py-2 text-sm text-white md:py-5">
               <span className="text-3xl text-sky-500">SOMABU</span> {message}
             </p>
-            <button className="px-8 py-2 font-bold text-white bg-blue-600 border hover:bg-blue-900">
-              Contact
-            </button>
+            {/* <button className="px-8 py-2 font-bold text-white transition duration-200 ease-in-out bg-blue-600 border w-fit hover:scale-105"> */}
+            <Nav_scroll href="contact" display="Contact" />
+            {/* </button> */}
           </div>
         </div>
       }

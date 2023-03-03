@@ -3,19 +3,20 @@ import Head from "next/head";
 
 import { useRouter } from "next/router";
 import { prisma } from "../../../lib/prisma";
-import en from "../../locales/en";
-import fr from "../../locales/fr";
+import { en } from "../../locales/en";
+import { fr } from "../../locales/fr";
 
-import { insert_photo, file_uploaded } from "../../lib/insert_photo";
+import { insert_file, file_uploaded } from "../../lib/insert_file";
 import { Create_fn } from "../../lib/Create_fn";
+import { validate_team_form } from "../../lib/validate_team_form";
 
-import Input_file from "@/modules/form/Input_file";
-import Input_text from "@/modules/form/Input_text";
+import { Input_file } from "@/modules/form/Input_file";
+import { Input_text } from "@/modules/form/Input_text";
 //import insert_photo from "./insert_photo";
 import Sidebar from "./components/Sidebar";
 import { Cud } from "@/lib/cud";
 
-interface FormData {
+interface I_form_data {
   name: string;
   position: string;
   position_fr: string;
@@ -52,7 +53,13 @@ export default function Team({ team_members, positions }: I_team_members) {
     id: "",
   };
 
-  const [form, setForm] = useState<FormData>(empty_form);
+  const [form, set_form] = useState<I_form_data>(empty_form);
+  const [errors, set_errors] = useState<{
+    name?: string;
+    position?: string;
+    position_fr?: string;
+    //photo_url?: string;
+  }>({});
   // I use these two variable of codes in order to update the list after pushing on a server and I'mna call it after submitting the form in then method
 
   let api_redirection: string = "team";
@@ -60,18 +67,38 @@ export default function Team({ team_members, positions }: I_team_members) {
   //Cud(data, api_redirection);
 
   // DOMPurify.sanitize(data) React.FormEvent<HTMLFormElement> React.FormEventHandler<HTMLFormElement>
-  const submit_fn = async (event) => {
-    await insert_photo(event, "team_member");
+  const submit_fn = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const errors = validate_team_form(form);
+    set_errors(errors);
+
+    const errors_values = Object.values(errors);
+
+    const is_no_error = errors_values.every(
+      (error_value) => error_value.length === 0
+    );
+
+    if (!is_no_error) return;
+    await insert_file(event, "team_member");
 
     form.photo_url = file_uploaded.secure_url;
 
     try {
       // DOMPurify.sanitize(data)
-      Create_fn(form, api_redirection, setForm, empty_form, refresh_data);
+      Create_fn(form, api_redirection, set_form, empty_form, refresh_data);
       //Cud(form, api_redirection);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const on_change = (
+    e:
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLInputElement>
+  ) => {
+    set_form((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
@@ -86,50 +113,52 @@ export default function Team({ team_members, positions }: I_team_members) {
           <Sidebar />
         </div>
 
-        <div className="mx-auto w-1/2 mt-20">
+        <div className="w-1/2 mx-auto mt-20">
           <form
             method="post"
             onSubmit={submit_fn}
             className="w-auto min-w-[75%] mx-0 sm:mx-auto md:mx-8 px-4 md:px-6 py-6 flex flex-col items-stretch"
           >
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-1"
-                htmlFor="Name"
-              >
-                Name in french
-              </label>
-              <input
-                type="text"
-                placeholder="enter your name"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="border-2 rounded border-gray-400 p-2 w-full mx-auto"
-              />
-            </div>
             <Input_text
+              name="name"
+              label="name"
+              placeholder="enter your name"
+              value={form.name}
+              on_change={on_change}
+              error={!!errors.name}
+              error_message={errors.name}
+            />
+            <Input_text
+              name="position"
               label="position"
-              label_display="Position"
-              placeholder="position"
+              placeholder="enter your position"
               value={form.position}
-              on_change={(e: any) =>
-                setForm({ ...form, position: e.target.value })
-              }
+              on_change={on_change}
+              error={!!errors.position}
+              error_message={errors.position}
             />
             <Input_text
-              label="post"
-              label_display="Post"
-              placeholder="post"
+              name="position_fr"
+              label="Position occupé"
+              placeholder="Position"
               value={form.position_fr}
-              on_change={(e: any) =>
-                setForm({ ...form, position_fr: e.target.value })
-              }
+              on_change={on_change}
+              error={!!errors.position_fr}
+              error_message={errors.position_fr}
             />
-            <Input_file name="file" label_display="Photo" />
+
+            <input type="file" name="file" accept="image/*" />
+
+            {/* <Input_file
+              name="file"
+              label="photo"
+              error={!!errors.photo_url}
+              error_message={errors.photo_url}
+            /> */}
 
             <button
               type="submit"
-              className="bg-blue-500 text-white rounded p-1"
+              className="p-1 text-white bg-blue-500 rounded"
             >
               Send your message
             </button>

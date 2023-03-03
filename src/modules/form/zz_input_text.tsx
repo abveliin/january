@@ -43,6 +43,9 @@ function Input_text({
       {error ? (
         <span className="text-sm italic text-red-500">{error_message}</span>
       ) : null}
+      {/* <span className="px-2 text-red-700 bg-red-100 invalid:block">
+        {error_message}
+      </span> */}
     </div>
   );
 }

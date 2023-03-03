@@ -13,7 +13,8 @@ import { Create_fn } from "../../lib/Create_fn";
 import Sidebar from "./components/Sidebar";
 import { Input_file } from "@/modules/form/Input_file";
 import { Input_text } from "@/modules/form/Input_text";
-import { Validate_partener_form } from "@/lib/validate_partener_form";
+import { validate_partener_form } from "@/lib/validate_partener_form";
+import { on_change } from "@/lib/on_change";
 
 interface I_form_data {
   id: string;
@@ -29,7 +30,7 @@ interface I_parteners {
   }[];
 }
 
-export default function Partener({ parteners }: I_parteners) {
+export default function Team({ parteners }: I_parteners) {
   const router = useRouter();
   const { locale } = router;
   const translation = locale === "fr" ? fr : en;
@@ -62,11 +63,13 @@ export default function Partener({ parteners }: I_parteners) {
     const file_input: any = Array.from(formula.elements).find(
       ({ name }: any) => name === "file"
     );
+    // set_errors({ ...errors, title: e.target.value });
+    console.log("file_input", file_input);
     const file_to_send = file_input.files[0];
+    console.log("file_input exist?", file_to_send?.length);
+    console.log("file_input is a image?", file_to_send);
 
-    console.log("translation", translation);
-
-    const errors = Validate_partener_form(form, translation);
+    const errors = validate_partener_form(form);
 
     set_errors(errors);
 
@@ -75,11 +78,13 @@ export default function Partener({ parteners }: I_parteners) {
     } else {
       set_errors({
         ...errors,
-        logo_url: translation.entrer_image,
+        logo_url: "vous devez envoyer une image valide",
       });
 
       return;
     }
+    console.log("errors are here", errors);
+    // set_errors({ ...errors, logo_url: e.target.value })
     const errors_values = Object.values(errors);
 
     const is_no_error = errors_values.every(
@@ -91,9 +96,11 @@ export default function Partener({ parteners }: I_parteners) {
 
     form.logo_url = file_uploaded.secure_url;
 
+    console.log("form.photo_url", form.logo_url);
+
     try {
       Create_fn(form, api_redirection, set_form, empty_form, refresh_data);
-      set_message(translation.message_after_send);
+      set_message("votre requete a ete envoye avec sucess");
     } catch (error) {
       console.log(error);
     }
@@ -147,8 +154,8 @@ export default function Partener({ parteners }: I_parteners) {
               Enregistrer
             </button>
             {message && (
-              <span className="mt-6 text-sm text-center text-green-600 bg-green-50 border-2 border-green-600">
-                {translation.message_after_send}
+              <span className="mt-6 text-sm text-center text-green-600 bg-green-100 border-2 border-green-800">
+                envoyer avec succes
               </span>
             )}
           </form>

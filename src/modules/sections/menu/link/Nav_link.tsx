@@ -22,7 +22,7 @@ const Nav_link = ({ href, title }: any) => {
   const is_current_path = router.pathname === href || router.asPath === href;
   //const base_style = "flex items-center ustify-start py-4 lg:py-0 font-bold capitalize";
   return (
-    <span className="p-2 hover:text-ye hover:scale-105 ease-in-out duration-300 text-bl  focus:outline-none">
+    <span className="p-2 duration-300 ease-in-out hover:text-ye hover:scale-105 text-bl focus:outline-none">
       <Link
         href={href}
         onClick={on_click_fn}

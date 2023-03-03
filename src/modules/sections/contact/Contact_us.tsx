@@ -4,7 +4,7 @@ import Google_map from "./Google_map";
 import Get_in_touch from "./Get_in_touch";
 import Title_section from "../Title_section";
 
-function Contact_us() {
+function Contact_us({ translation }) {
   return (
     <div id="contact">
       <div>
@@ -12,8 +12,8 @@ function Contact_us() {
       </div>
       <div className="">
         <div className="md:flex">
-          <Get_in_touch />
-          <Contact_form />
+          <Get_in_touch translation={translation} />
+          <Contact_form translation={translation} />
         </div>
         <Google_map />
       </div>

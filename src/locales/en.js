@@ -1,4 +1,4 @@
-const translations = {
+const en = {
   home: "home",
   about: "about us",
   services: "services",
@@ -23,6 +23,22 @@ const translations = {
   description_point_5: "Various supplies",
   description_point_6: "Bio-medical supplies",
   historical: "HISTORICAL",
+
+  message_after_send: "your request has been sent successfully",
+  error_field_message: "Field required",
+  entrer_image: "Enter image",
+
+  label_name: "Name",
+  label_name_placeholder: "Your name",
+
+  label_email: "Email",
+  label_email_placeholder: "Your email",
+
+  label_subject: "Subject",
+  label_subject_placeholder: "Your subject",
+
+  label_message: "Message",
+  label_message_placeholder: "Your message",
 };
 
-export default translations;
+export { en };

@@ -6,8 +6,8 @@ import { Inter } from "@next/font/google";
 import { prisma } from "../../lib/prisma";
 
 import { useRouter } from "next/router";
-import en from "../locales/en";
-import fr from "../locales/fr";
+import { en } from "../locales/en";
+import { fr } from "../locales/fr";
 
 import { Footer } from "@/modules/sections/footer/Footer";
 import Title_section from "@/modules/sections/Title_section";
@@ -17,12 +17,12 @@ const inter = Inter({ subsets: ["latin"] });
 interface I_realisations {
   realisations: {
     id: string;
-    tag: string;
-    tag_fr: string;
+    category: string;
+    category_fr: string;
     title: string;
     title_fr: string;
-    excerpt: string;
-    excerpt_fr: string;
+    description: string;
+    description_fr: string;
     photo_url: string;
     lasting_of_execution: string;
   }[];
@@ -64,11 +64,11 @@ export default function Realisations({
 
       <Title_section title="Our realisations" />
 
-      <div className="flex flex-wrap  w-full bg-slate-50">
+      <div className="flex flex-wrap w-full bg-slate-50">
         {realisations.map((realisation) => (
           <div
             key={realisation.id}
-            className="w-full md:w-1/2 2xl:w-1/3 p-6 text-bl"
+            className="w-full p-6 md:w-1/2 2xl:w-1/3 text-bl"
           >
             <div className="">
               <div className="relative pb-[56%]   shadow-2xl bg-green-600">
@@ -78,40 +78,40 @@ export default function Realisations({
                   width={500} // ×
                   height={500}
                   //placeholder="blur"
-                  className="absolute object-cover object-center h-full w-full "
+                  className="absolute object-cover object-center w-full h-full "
                 />
               </div>
-              <div className="relative mx-8 -mt-12 flex flex-col rounded-2xl shadow-xl bg-gray-50">
+              <div className="relative flex flex-col mx-8 -mt-12 shadow-xl rounded-2xl bg-gray-50">
                 <div className="flex flex-col p-12 justify-center h-[200px] md:h-[300px]">
                   {locale === "fr" && (
-                    <h3 className=" uppercase font-semibold text-yellow-600">
-                      {realisation.tag_fr}
+                    <h3 className="font-semibold text-yellow-600 uppercase ">
+                      {realisation.category_fr}
                     </h3>
                   )}
                   {locale === "en" && (
-                    <h3 className=" uppercase font-semibold text-yellow-600">
-                      {realisation.tag}
+                    <h3 className="font-semibold text-yellow-600 uppercase ">
+                      {realisation.category}
                     </h3>
                   )}
                   {locale === "fr" && (
-                    <h1 className="pt-2 text-base font-semibold uppercase leading-8">
+                    <h1 className="pt-2 text-base font-semibold leading-8 uppercase">
                       {realisation.title_fr}
                     </h1>
                   )}
 
                   {locale === "en" && (
-                    <h1 className="pt-2 text-base font-semibold uppercase leading-8">
+                    <h1 className="pt-2 text-base font-semibold leading-8 uppercase">
                       {realisation.title}
                     </h1>
                   )}
                   {locale === "fr" && (
                     <h3 className="flex-1 pt-4 text-sm leading-6">
-                      {realisation.excerpt_fr}
+                      {realisation.description_fr}
                     </h3>
                   )}
                   {locale === "en" && (
                     <h3 className="flex-1 pt-4 text-sm leading-6">
-                      {realisation.excerpt}
+                      {realisation.description}
                     </h3>
                   )}
 
@@ -137,22 +137,23 @@ export default function Realisations({
         team_members={team_members}
         parteners={parteners}
         language={language}
+        translation={translation}
       />
     </div>
   );
 }
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const realisations = await prisma.realisation.findMany({
     // created_at and updated_at can be dificult to retreive that's why I add these parameters in findMany function
     select: {
       id: true,
-      tag: true,
-      tag_fr: true,
+      category: true,
+      category_fr: true,
       title: true,
       title_fr: true,
-      excerpt: true,
-      excerpt_fr: true,
+      description: true,
+      description_fr: true,
       lasting_of_execution: true,
       photo_url: true,
     },

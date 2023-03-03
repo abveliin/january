@@ -1,8 +1,8 @@
 import Head from "next/head";
 
 import { useRouter } from "next/router";
-import en from "../locales/en";
-import fr from "../locales/fr";
+import { en } from "../locales/en";
+import { fr } from "../locales/fr";
 
 export default function Home() {
   const router = useRouter();
@@ -16,7 +16,7 @@ export default function Home() {
         <meta name="description" content="test of a multilanguage website" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <div className="relative bg-red-400 mt-20">
+      <div className="relative mt-20 bg-red-400">
         <p>{translation.description}</p>
         <ul>
           <li>{translation.description_point_1}</li>

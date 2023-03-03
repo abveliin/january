@@ -4,7 +4,13 @@ interface I_contact_form {
   subject?: string;
   message: string;
 }
-export const validate = ({ name, email, subject, message }: I_contact_form) => {
+interface I_error_message {
+  error_field_message: string;
+}
+export const validate = (
+  { name, email, subject, message }: I_contact_form,
+  { error_field_message }: I_error_message
+) => {
   const errors: {
     name?: string;
     email: string;
@@ -12,18 +18,18 @@ export const validate = ({ name, email, subject, message }: I_contact_form) => {
     message: string;
   } = { name: "", email: "", subject: "", message: "" };
   if (!name || name.trim() === "") {
-    errors.name = "Name is required";
+    errors.name = error_field_message;
   }
   if (!email || email.trim() === "") {
-    errors.email = "Email is required";
+    errors.email = error_field_message;
   } else if (!/^[A-Z0-9._]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
     errors.email = "votre adresse email n'est pas valide";
   }
   if (!subject || subject.trim() === "") {
-    errors.subject = "Subject is required";
+    errors.subject = error_field_message;
   }
   if (!message || message.trim() === "") {
-    errors.message = "Message is required";
+    errors.message = error_field_message;
   }
   return errors;
 };

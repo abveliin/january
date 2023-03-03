@@ -12,8 +12,8 @@ import Mission from "../modules/sections/mission/Mission";
 import Realisations from "@/modules/sections/realisations/Realisations";
 import { Footer } from "@/modules/sections/footer/Footer";
 
-import en from "../locales/en";
-import fr from "../locales/fr";
+import { en } from "../locales/en";
+import { fr } from "../locales/fr";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,8 +21,8 @@ interface I_home {
   realisations: {
     id: string;
     order: number;
-    tag: string;
-    tag_fr: string;
+    category: string;
+    category_fr: string;
     title: string;
     title_fr: string;
     photo_url: string;
@@ -60,7 +60,7 @@ export default function Home({
     <div id="home" className="text-bl bg-slate-50">
       <Head>
         <title>SOMABU</title>
-        <meta name="description" content="test of a multilanguage website" />
+        <meta name="description" content="entreprise de construction" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -73,21 +73,25 @@ export default function Home({
       <Mission />
 
       {realisations.length != 0 ? (
-        <Realisations realisations={realisations} />
+        <Realisations realisations={realisations} translation={translation} />
       ) : (
         ""
       )}
-
+      <Home_parallax
+        heading={translation.para_heading}
+        message={translation.para_message}
+      />
       <Footer
         team_members={team_members}
         parteners={parteners}
         language={language}
+        translation={translation}
       />
     </div>
   );
 }
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const team_members = await prisma.team_member.findMany({
     // created_at and updated_at can be dificult to retreive that's why I add these parameters in findMany function
     select: {
@@ -95,6 +99,7 @@ export const getServerSideProps = async () => {
       order: true,
       name: true,
       position: true,
+      position_fr: true,
       photo_url: true,
     },
     orderBy: { created_at: "desc" },
@@ -115,8 +120,8 @@ export const getServerSideProps = async () => {
     select: {
       id: true,
       order: true,
-      tag: true,
-      tag_fr: true,
+      category: true,
+      category_fr: true,
       title: true,
       title_fr: true,
       photo_url: true,

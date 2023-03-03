@@ -24,9 +24,10 @@ interface I_footer {
   }[];
 
   language: string | undefined;
+  translation: any;
 }
 
-function Footer({ team_members, parteners, language }: I_footer) {
+function Footer({ team_members, parteners, language, translation }: I_footer) {
   const [is_modal_open, set_is_modal_open] = useState<boolean>(false);
   const toggle_modal_fn = () => {
     set_is_modal_open(!is_modal_open);
@@ -57,7 +58,7 @@ function Footer({ team_members, parteners, language }: I_footer) {
         />
       )}
 
-      <Contact_us />
+      <Contact_us translation={translation} />
       {parteners && parteners.length != 0 ? (
         <Parteners parteners={parteners} />
       ) : (

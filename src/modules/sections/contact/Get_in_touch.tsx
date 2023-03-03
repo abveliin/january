@@ -5,16 +5,16 @@ import Info_with_icon from "../../components/Info_with_icon";
 
 import Mail_link_with_icon from "../../components/Mail_link_with_icon";
 
-function Get_in_touch() {
+function Get_in_touch(translation) {
   return (
-    <div className="md:w-1/2 p-4">
-      <h1 className="uppercase text-2xl py-4 font-bold">get in touch</h1>
+    <div className="p-4 md:w-1/2">
+      <h1 className="py-4 text-2xl font-bold uppercase">get in touch</h1>
       <div className="text-sm leading-relaxed">
         <Mail_link_with_icon email="directeur@somabu.bi" />
         <Mail_link_with_icon email="info@somabu.bi" />
 
-        <Info_with_icon icon={<FaMobileAlt />} info="+257 79 741 558" />
-        <Info_with_icon icon={<HiPhone />} info="+257 22 22 2w 2w" />
+        <Info_with_icon icon={<FaMobileAlt />} info="+257 61 22 22 21" />
+        <Info_with_icon icon={<HiPhone />} info="+257 22 28 02 78" />
 
         <Info_with_icon
           icon={<FaHome className="text-ye" />}

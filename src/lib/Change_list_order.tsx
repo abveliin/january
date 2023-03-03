@@ -14,8 +14,8 @@ import { BsArrowDownUp } from "react-icons/bs";
 import { prisma } from "../../lib/prisma";
 
 import { useRouter } from "next/router";
-import en from "../locales/en";
-import fr from "../locales/fr";
+import { en } from "../locales/en";
+import { fr } from "../locales/fr";
 
 import Title_section from "@/modules/sections/Title_section";
 
@@ -67,7 +67,7 @@ export default function Change_list_order(
   return (
     <div className="relative mt-32 bg-slate-100">
       <div className="flex min-h-screen py-8  mt-[60px]">
-        <div className="w-1/2  mx-auto bg-gray-50">
+        <div className="w-1/2 mx-auto bg-gray-50">
           <Title_section title="Order realisations" />
 
           <DragDropContext onDragEnd={on_drag_end_fn}>
@@ -86,7 +86,7 @@ export default function Change_list_order(
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                             ref={provided.innerRef}
-                            className="flex items-center border-2 py-2 px-4 my-2 border-blue-800 bg-slate-300 text-bl text-sm font-bold rounded-lg"
+                            className="flex items-center px-4 py-2 my-2 text-sm font-bold border-2 border-blue-800 rounded-lg bg-slate-300 text-bl"
                           >
                             <BsArrowDownUp className="font-extrabold" />
                             <div className="flex ml-4">
@@ -97,7 +97,7 @@ export default function Change_list_order(
                                   width={500} // ×
                                   height={500}
                                   //placeholder="blur"
-                                  className="object-cover object-center h-full w-full"
+                                  className="object-cover object-center w-full h-full"
                                 />
                               </div>
                               {children}
@@ -116,7 +116,7 @@ export default function Change_list_order(
           <form onSubmit={submit_fn}>
             <button
               type="submit"
-              className="bg-blue-400 py-2 px-3 text-white rounded-lg"
+              className="px-3 py-2 text-white bg-blue-400 rounded-lg"
             >
               Send
             </button>

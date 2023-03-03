@@ -5,25 +5,31 @@ import { GrDocumentPdf } from "react-icons/gr";
 
 import React_portal from "./React_portal";
 
-import { insert_photo, file_uploaded } from "@/lib/insert_photo";
+import { insert_file, file_uploaded } from "@/lib/insert_file";
 import { MdOutlineClose } from "react-icons/md";
 
-import Input_file from "@/modules/form/Input_file";
-import Input_text from "@/modules/form/Input_text";
+import { Input_file } from "@/modules/form/Input_file";
+import { Input_text } from "@/modules/form/Input_text";
+import { validate_apply } from "@/lib/validate_apply";
 
-import en from "../../locales/en";
-import fr from "../../locales/fr";
-import Text_area from "../form/Text_area";
+import { en } from "../../locales/en";
+import { fr } from "../../locales/fr";
+import { Text_area } from "../form/Text_area";
 
 interface I_apply_modal {
   show: boolean;
   on_close: () => void;
 }
 
-interface FormData {
+interface I_form_data {
   id: string;
   name: string;
-  message: string;
+  email: string;
+  phone: string;
+  position: string;
+  motivation: string;
+  language: string | undefined;
+  file_url: string;
 }
 
 const Apply_modal = ({ show, on_close }: I_apply_modal) => {
@@ -39,15 +45,25 @@ const Apply_modal = ({ show, on_close }: I_apply_modal) => {
     email: "",
     phone: "",
     position: "",
-    subject: "",
-    message: "",
+    motivation: "",
     language: locale,
     file_url: "",
   };
 
-  const [form, setForm] = useState<FormData>(emtpy_form);
+  const [form, setForm] = useState<I_form_data>(emtpy_form);
+
+  const [errors, set_errors] = useState<{
+    name?: string;
+    email?: string;
+    phone?: string;
+    position?: string;
+    motivation?: string;
+    language?: string;
+    file_url?: string;
+  }>({});
+
   useEffect(() => {
-    const close_on_escape_key = (e: KeyboardEvent) => {
+    const close_on_escape_key: any = (e: KeyboardEvent) => {
       e.key === "Escape" ? on_close() : null;
     };
 
@@ -89,6 +105,14 @@ const Apply_modal = ({ show, on_close }: I_apply_modal) => {
   const submit_fn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(form);
+    const errors = validate_apply(form);
+    const is_error = Object.keys(errors).length;
+
+    if (is_error && is_error > 0) {
+      set_errors(errors);
+      // console.log(errors);
+      return;
+    }
     // await insert_photo(event, "team_member");
 
     // form.file_url = file_uploaded.secure_url;
@@ -136,17 +160,50 @@ const Apply_modal = ({ show, on_close }: I_apply_modal) => {
           >
             <Input_text
               name="name"
-              label="Catégorie"
-              placeholder="Veuillez entrer la catégorie"
+              label="name"
+              placeholder="enter your name"
               value={form.name}
               on_change={on_change}
+              error={!!errors.name}
+              error_message={errors.name}
             />
-            <Text_area
-              name="message"
-              label="Catégorie"
-              placeholder="Veuillez entrer la catégorie"
-              value={form.message}
+            <Input_text
+              name="email"
+              label="email"
+              placeholder="Enter email please"
+              value={form.email}
               on_change={on_change}
+              error={!!errors.email}
+              error_message={errors.email}
+            />
+
+            <Input_text
+              name="phone"
+              label="Phone number"
+              placeholder="enter your phone number"
+              value={form.phone}
+              on_change={on_change}
+              error={!!errors.phone}
+              error_message={errors.phone}
+            />
+            <Input_text
+              name="position"
+              label="position"
+              placeholder="position"
+              value={form.position}
+              on_change={on_change}
+              error={!!errors.position}
+              error_message={errors.position}
+            />
+
+            <Text_area
+              name="motivation"
+              label="your motivation"
+              placeholder="your motivation"
+              value={form.motivation}
+              on_change={on_change}
+              error={!!errors.motivation}
+              error_message={errors.motivation}
             />
 
             <Input_file name="file" label_display="cv pdf" />

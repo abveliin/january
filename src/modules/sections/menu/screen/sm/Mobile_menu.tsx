@@ -2,6 +2,7 @@ import React from "react";
 
 import Nav_links from "../../link/Nav_links";
 import Languages from "../../Languages";
+import { navbar_context } from "@/modules/components/is_navbar_open_context";
 
 interface I_mobile_menu {
   is_nav_open: boolean;
@@ -10,7 +11,7 @@ interface I_mobile_menu {
 //is_nav_open, set_is_nav_open
 const Mobile_menu = ({ is_nav_open, set_is_nav_open }: I_mobile_menu) => {
   return (
-    <div className=" flex lg:hidden">
+    <div className="flex lg:hidden">
       <button
         className={
           is_nav_open
@@ -28,7 +29,7 @@ const Mobile_menu = ({ is_nav_open, set_is_nav_open }: I_mobile_menu) => {
         onClick={() => set_is_nav_open(!is_nav_open)}
       >
         <div className="flex">
-          <Nav_links />
+          <Nav_links set_is_nav_open={set_is_nav_open} />
         </div>
       </button>
     </div>
